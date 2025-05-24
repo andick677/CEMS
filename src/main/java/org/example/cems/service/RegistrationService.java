@@ -4,6 +4,7 @@ import org.example.cems.mapper.EventMapper;
 import org.example.cems.mapper.RegistrationMapper;
 import org.example.cems.model.Event;
 import org.example.cems.model.Registration;
+import org.example.cems.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +60,7 @@ public class RegistrationService {
     }
 
     public List<Registration> trackAddEvent(long userId){
-        return registrationMapper.findByUserId(userId);
+        return registrationMapper.trackAddEvent(userId);
     }
 
     public String cancelEvent(long userId,long eventId){
@@ -100,6 +101,10 @@ public class RegistrationService {
 
     public int getCurrentPeople(long eventId){
         return registrationMapper.getCurrentPeople(eventId);
+    }
+
+    public List<Registration> getRegistrationUserId(int eventId){
+        return registrationMapper.getRegistrationUserId(eventId);
     }
 
 }

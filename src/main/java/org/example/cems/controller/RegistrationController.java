@@ -80,6 +80,17 @@ public class RegistrationController {
         }
     }
 
+    @GetMapping("/getRegistrationUserId/{eventId}")
+    public ResponseEntity<?> getRegistrationUserId(@PathVariable int eventId){
+        try{
+            List<Registration> list = registrationService.getRegistrationUserId(eventId);
+            return ResponseEntity.ok(list);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("error"+e.getMessage());
+        }
+    }
+
+
 
 
 }

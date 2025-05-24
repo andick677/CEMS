@@ -13,8 +13,11 @@ public interface RegistrationMapper {
     @Insert("INSERT INTO registrations(user_id,event_id,status) VALUES (#{userId},#{eventId},#{status})")
     void addEvent(@Param("userId")long userId,@Param("eventId")long eventId,@Param("status")String status);
 
-    @Select("SELECT user_id, event_id,status FROM registrations WHERE user_id = #{userId}")
+    @Select("SELECT user_id, event_id,status FROM registrations WHERE user_id = #{userId} ")
     List<Registration> findByUserId(@Param("userId")long userId);
+
+    @Select("SELECT user_id, event_id,status FROM registrations WHERE user_id = #{userId} AND NOT status='CANCELLED' ")
+    List<Registration> trackAddEvent(@Param("userId")long userId);
 
     @Update("UPDATE registrations SET status = #{status} WHERE user_id = #{userId} AND event_id = #{eventId}")
     void setStatus(@Param("userId")long userId,@Param("eventId")long eventId,@Param("status")String status);
@@ -24,6 +27,10 @@ public interface RegistrationMapper {
 
     @Select("SELECT COUNT(*) FROM registrations WHERE event_id = #{eventId} AND status = 'REGISTERED'")
     int getCurrentPeople(@Param("eventId")long eventId);
+
+    @Select("SELECT user_id FROM registrations WHERE event_id = #{eventId} AND status = 'REGISTERED'")
+    List<Registration> getRegistrationUserId(@Param("eventId")int eventId);
+
 
 
 }
